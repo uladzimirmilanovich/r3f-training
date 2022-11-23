@@ -1,7 +1,7 @@
-import React, { useEffect, useRef, useState } from "react";
-import { Html } from "@react-three/drei";
-import { GroupProps } from "@react-three/fiber";
-import { Group, Texture } from "three";
+import React, { useEffect, useRef, useState } from 'react';
+import { Html } from '@react-three/drei';
+import { GroupProps } from '@react-three/fiber';
+import { Group, Texture } from 'three';
 
 export type CardProps = GroupProps & {
   label?: string;
@@ -14,14 +14,14 @@ export function Card(props: CardProps) {
 
   // TODO: Use UV-mapping to apply 1 texture to 2 sides
   return (
-    <group {...props} ref={groupRef} castShadow>
-      <mesh scale={[1, 1.45, 1]} rotation={[-Math.PI / 2, 0, 0]}>
+    <group {...props} ref={groupRef}>
+      <mesh scale={[1, 1.45, 1]} rotation={[-Math.PI / 2, 0, 0]} castShadow>
         <planeGeometry />
-        <meshStandardMaterial color={"white"} map={props.backTexture} />
+        <meshStandardMaterial color={'white'} map={props.backTexture} />
       </mesh>
-      <mesh scale={[1, 1.45, 1]} rotation={[Math.PI / 2, 0, 0]}>
+      <mesh scale={[1, 1.45, 1]} rotation={[Math.PI / 2, 0, 0]} castShadow>
         <planeGeometry />
-        <meshStandardMaterial color={"white"} map={props.frontTexture} />
+        <meshStandardMaterial color={'white'} map={props.frontTexture} />
       </mesh>
 
       {props.label && (
