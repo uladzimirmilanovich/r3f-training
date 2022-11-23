@@ -1,0 +1,43 @@
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: white;
+}
+
+.playButton {
+  position: relative;
+  background: black;
+  color: white;
+  font-size: 1.5rem;
+  border: none;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+}
+
+.uiContainer {
+  display: flex;
+  bottom: 0;
+  position: fixed;
+  width: 100%;
+  margin: 5rem 0;
+  justify-content: center;
+}
+
+.cardLabel {
+  background: black;
+  color: white;
+  font-size: 0.5rem;
+  padding: 0.5rem 1rem;
+  opacity: 0.75;
+}
