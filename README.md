@@ -1,4 +1,4 @@
-Description
+# Description
 
 The goal for the assignment:
 
@@ -8,7 +8,8 @@ The goal for the assignment:
 - Learn how to animate components
 - Learn how to make animation interactive (caused by user action)
 
-How to run
+# How to run
 
+- update [config](./src/config.ts) to have desired graphics and card options
 - npm i
 - npm run dev

@@ -74,6 +74,11 @@ export const cardsConfig = {
     'K',
     'A',
   ],
+  textureSize: {
+    baseResolution: 256,
+    symbol: 64,
+    offset: 16,
+  },
 };
 
 export const cardsAnimationConfig = {
