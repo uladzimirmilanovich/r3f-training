@@ -8,15 +8,19 @@ import './styles.css';
 import { App } from './App';
 import { RoomContext } from './context/RoomContext';
 import { cameraConfig } from './config';
+import { getRandomOutcome } from './utils/outcome';
+import { isEmpty } from './utils/helper';
+import { TCard } from './types/Card';
 
 const Root = () => {
-  const [pickedCard, setPickedCard] = useState<number | null>(null);
+  const [pickedCard, setPickedCard] = useState<TCard>(null);
 
   const handlePlay = useCallback(() => {
-    if (pickedCard) {
-    }
     setPickedCard((value) => {
-      return value === null || value < 0 ? Math.floor(Math.random() * 12) : -1;
+      // TODO: Move this part to 'backend mock`
+      return value === null || !value.isShown
+        ? getRandomOutcome()
+        : { ...value, key: '', isShown: false };
     });
   }, [pickedCard]);
 
@@ -38,6 +42,7 @@ const Root = () => {
           maxAzimuthAngle={cameraConfig.angle.azimuth.max}
           minDistance={cameraConfig.distance.min}
           maxDistance={cameraConfig.distance.max}
+          enablePan={false}
         />
 
         <App />

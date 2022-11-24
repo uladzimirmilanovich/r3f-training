@@ -1,8 +1,12 @@
-import React from "react";
-import { Room } from "./components/Room";
-import floorTexture from "./assets/floor.jpg";
-import wallTexture from "./assets/wall.jpg";
+import React from 'react';
+import { Room } from './components/Room';
+import { stageConfig } from './config';
 
 export function App() {
-  return <Room wallTextureUrl={wallTexture} floorTextureUrl={floorTexture} />;
+  return (
+    <Room
+      wallTextureUrl={stageConfig.wallTextureUrl}
+      floorTextureUrl={stageConfig.floorTextureUrl}
+    />
+  );
 }

@@ -3,6 +3,9 @@ import clubsVisualUrl from './assets/cards/suits/clubs.svg';
 import diamondsVisualUrl from './assets/cards/suits/diamonds.svg';
 import heartsVisualUrl from './assets/cards/suits/hearts.svg';
 import spadesVisualUrl from './assets/cards/suits/spades.svg';
+import backgroundTextureUrl from './assets/cards/background.png';
+import floorTexture from './assets/floor.jpg';
+import wallTexture from './assets/wall.jpg';
 
 export const cameraConfig = {
   position: new Vector3(2, 10, 2),
@@ -27,24 +30,32 @@ export const cameraConfig = {
 
 export const cardsConfig = {
   total: 56,
-  thickness: 0.005,
-  backgroundUrl: {},
+  size: { width: 1, height: 1.45, thickness: 0.005 },
+  backgroundUrl: backgroundTextureUrl,
   suits: [
     {
-      id: 'clubs',
+      id: 0,
+      label: 'clubs',
       visualUrl: clubsVisualUrl,
+      color: '#000000',
     },
     {
-      id: 'diamonds',
+      id: 1,
+      label: 'diamonds',
       visualUrl: diamondsVisualUrl,
+      color: '#ff0000',
     },
     {
-      id: 'hearts',
+      id: 2,
+      label: 'hearts',
       visualUrl: heartsVisualUrl,
+      color: '#ff0000',
     },
     {
-      id: 'spades',
+      id: 3,
+      label: 'spades',
       visualUrl: spadesVisualUrl,
+      color: '#000000',
     },
   ],
   symbols: [
@@ -68,7 +79,7 @@ export const cardsConfig = {
 export const cardsAnimationConfig = {
   idle: {
     rotationZ: 0,
-    position: [0, cardsConfig.thickness * cardsConfig.total, 0],
+    position: [0, cardsConfig.size.thickness * cardsConfig.total, 0],
   },
   reveal: [
     {
@@ -89,9 +100,12 @@ export const cardsAnimationConfig = {
       rotationZ: 0,
     },
     {
-      position: [0, cardsConfig.thickness * cardsConfig.total, 0],
+      position: [0, cardsConfig.size.thickness * cardsConfig.total, 0],
     },
   ],
 };
 
-export const stageConfig = {};
+export const stageConfig = {
+  floorTextureUrl: floorTexture,
+  wallTextureUrl: wallTexture,
+};

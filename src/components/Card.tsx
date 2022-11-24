@@ -1,32 +1,62 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { Html } from '@react-three/drei';
 import { GroupProps } from '@react-three/fiber';
-import { Group, Texture } from 'three';
+import {
+  Group,
+  MeshBasicMaterial,
+  RepeatWrapping,
+  Texture,
+  Vector2,
+} from 'three';
+import { cardsConfig as config } from '../config';
+import { TCardSymbol, TCardSuit, TCard } from '../types/Card';
+import { CardTexture } from '../materials/CardTexture';
+import { MergeTexturesMaterial } from '../materials/MergeTexturesMaterial';
 
 export type CardProps = GroupProps & {
   label?: string;
-  backTexture: Texture;
-  frontTexture: Texture;
+  suit?: TCardSuit;
+  symbol?: TCardSymbol;
+  data?: TCard;
+  textures: { suits?: Texture[]; back?: Texture };
 };
 
-export function Card(props: CardProps) {
-  const groupRef = useRef<Group>(null);
+export function Card({ data, label, textures, ...rest }: CardProps) {
+  const [hovered, setHovered] = useState(false);
 
-  // TODO: Use UV-mapping to apply 1 texture to 2 sides
+  const material = useMemo(() => {
+    if (!data?.suit) {
+      return new MeshBasicMaterial({ color: 'white' });
+    }
+
+    const texture1 = new CardTexture(
+      config.size.width,
+      config.size.height,
+      data?.suit,
+      data?.symbol,
+      textures.suits,
+    );
+
+    return new MeshBasicMaterial({ map: texture1 });
+  }, [data?.key]);
+
+  // TODO: Use shader to apply 1 texture to 2 sides of single plane
   return (
-    <group {...props} ref={groupRef}>
-      <mesh scale={[1, 1.45, 1]} rotation={[-Math.PI / 2, 0, 0]} castShadow>
-        <planeGeometry />
-        <meshStandardMaterial color={'white'} map={props.backTexture} />
+    <group
+      {...rest}
+      onPointerEnter={() => setHovered(true)}
+      onPointerLeave={() => setHovered(false)}>
+      <mesh rotation={[-Math.PI / 2, 0, 0]} castShadow>
+        <planeGeometry args={[config.size.width, config.size.height, 2]} />
+        <meshStandardMaterial map={textures.back} />
       </mesh>
-      <mesh scale={[1, 1.45, 1]} rotation={[Math.PI / 2, 0, 0]} castShadow>
-        <planeGeometry />
-        <meshStandardMaterial color={'white'} map={props.frontTexture} />
+      <mesh rotation={[Math.PI / 2, 0, 0]} material={material} castShadow>
+        <planeGeometry args={[config.size.width, config.size.height, 2]} />
       </mesh>
 
-      {props.label && (
-        <Html scale={0.125} position={[0, 0.01, 0]} center>
-          <span className="cardLabel">{props.label}</span>
+      {hovered && label && (
+        <Html as="div" position={[0, 0.01, 0]} className="cardContainer" center>
+          <span className="cardLabel">{label}</span>
         </Html>
       )}
     </group>

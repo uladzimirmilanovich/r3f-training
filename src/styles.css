@@ -34,6 +34,13 @@ body {
   justify-content: center;
 }
 
+.cardContainer {
+  width: 10rem;
+  display: flex;
+  justify-content: center;
+  pointer-events: none;
+}
+
 .cardLabel {
   background: black;
   color: white;
