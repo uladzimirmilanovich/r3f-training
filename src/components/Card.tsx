@@ -1,17 +1,11 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { Html } from '@react-three/drei';
 import { GroupProps } from '@react-three/fiber';
-import {
-  Group,
-  MeshBasicMaterial,
-  RepeatWrapping,
-  Texture,
-  Vector2,
-} from 'three';
+import { MeshBasicMaterial, Texture } from 'three';
 import { cardsConfig as config } from '../config';
 import { TCardSymbol, TCardSuit, TCard } from '../types/Card';
-import { CardTexture } from '../materials/CardTexture';
-import { MergeTexturesMaterial } from '../materials/MergeTexturesMaterial';
+import { CardTexture } from '../textures/CardTexture';
+import { CardMaterial } from '../materials/CardMaterial';
 
 export type CardProps = GroupProps & {
   label?: string;
@@ -48,7 +42,8 @@ export function Card({ data, label, textures, ...rest }: CardProps) {
       onPointerLeave={() => setHovered(false)}>
       <mesh rotation={[-Math.PI / 2, 0, 0]} castShadow>
         <planeGeometry args={[config.size.width, config.size.height, 2]} />
-        <meshStandardMaterial map={textures.back} />
+        {/* <meshStandardMaterial map={textures.back} /> */}
+        <CardMaterial speed={2} />
       </mesh>
       <mesh rotation={[Math.PI / 2, 0, 0]} material={material} castShadow>
         <planeGeometry args={[config.size.width, config.size.height, 2]} />

@@ -1,15 +1,13 @@
-import THREE, { BasicShadowMap } from 'three';
+import THREE from 'three';
 import React, { useCallback, useState } from 'react';
-
 import { createRoot } from 'react-dom/client';
 import { Canvas } from '@react-three/fiber';
-import { OrbitControls, GizmoHelper, GizmoViewport } from '@react-three/drei';
+import { OrbitControls } from '@react-three/drei';
 import './styles.css';
 import { App } from './App';
 import { RoomContext } from './context/RoomContext';
 import { cameraConfig } from './config';
 import { getRandomOutcome } from './utils/outcome';
-import { isEmpty } from './utils/helper';
 import { TCard } from './types/Card';
 
 const Root = () => {

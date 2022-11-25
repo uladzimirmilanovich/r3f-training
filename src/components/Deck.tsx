@@ -1,14 +1,15 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useMemo } from 'react';
 import { Card } from './Card';
 import { RoomContext } from '../context/RoomContext';
 import { animated, useSpring } from '@react-spring/three';
-import { Center, useTexture } from '@react-three/drei';
+import { Center, shaderMaterial, useTexture } from '@react-three/drei';
 import { Vector3 } from '@react-three/fiber';
 import {
   cardsAnimationConfig as animation,
   cardsConfig as config,
 } from '../config';
 import { MeshStandardMaterial } from 'three';
+import { useCardMaterial } from '../materials/CardMaterial';
 
 export function Deck() {
   const { pickedCard } = useContext(RoomContext);
@@ -19,6 +20,21 @@ export function Deck() {
 
   const backTexture = useTexture(config.backgroundUrl);
   const suitsTextures = useTexture(config.suits.map((item) => item.visualUrl));
+  const backgroundMaterial = useCardMaterial();
+
+  const materials = useMemo(() => {
+    const sideMaterial = new MeshStandardMaterial({ color: 'white' });
+
+    return [
+      sideMaterial,
+      sideMaterial,
+      backgroundMaterial,
+      sideMaterial,
+      sideMaterial,
+      sideMaterial,
+      sideMaterial,
+    ];
+  }, []);
 
   useEffect(() => {
     if (pickedCard) {
@@ -31,17 +47,7 @@ export function Deck() {
   return (
     <group rotation={[0, Math.PI / 2, 0]} position={[0, 0.01, 0]}>
       <Center top>
-        <mesh
-          receiveShadow
-          castShadow
-          material={[
-            new MeshStandardMaterial({ color: 'white' }),
-            new MeshStandardMaterial({ color: 'white' }),
-            new MeshStandardMaterial({ map: backTexture }),
-            new MeshStandardMaterial({ color: 'white' }),
-            new MeshStandardMaterial({ color: 'white' }),
-            new MeshStandardMaterial({ color: 'white' }),
-          ]}>
+        <mesh receiveShadow castShadow material={materials}>
           <boxGeometry
             args={[
               config.size.width,

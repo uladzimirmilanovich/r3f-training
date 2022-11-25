@@ -1,6 +1,6 @@
-import { GroupProps } from "@react-three/fiber";
-import React from "react";
-import { Texture } from "three";
+import React from 'react';
+import { GroupProps } from '@react-three/fiber';
+import { Texture } from 'three';
 
 export type FloorProps = GroupProps & {
   size?: number;
